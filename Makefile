@@ -1,19 +1,12 @@
-CC      ?= gcc
-CFLAGS  ?= -O0 -ggdb -pedantic -Wall -I /usr/include/libdrm
-LDFLAGS ?= -ldrm
+CC = riscv32-unknown-linux-gnu-gcc
+CFLAGS = -O0 -ggdb -pedantic -Wall -I./drm -I./drm/include/drm
+LDFLAGS = -L../buildroot/output/target/usr/lib -ldrm
 
 OBJ = main.o framebuffer.o
 PROGNAME = drm-framebuffer
 
-exec_prefix ?= /usr
-bindir ?= $(exec_prefix)/bin
-
 all: $(OBJ)
 	$(CC) $(CFLAGS) -o $(PROGNAME) $(OBJ) $(LDFLAGS)
-
-install: all
-	install -d $(DESTDIR)$(bindir)
-	install -m 0755 $(PROGNAME) $(DESTDIR)$(bindir)
 
 clean:
 	@echo "Clean object files"
